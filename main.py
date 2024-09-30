@@ -38,10 +38,18 @@ with Session(engine) as session:
     
     
     #выборка данных с помощью оператора select
-    session = Session(engine)
-    stmt = select(User).where(User.name.in_(["spongebob", "sandy"]))
-    for user in session.scalars(stmt):
-        print(user)
+    # session = Session(engine)
+    # stmt = select(User).where(User.name.in_(["spongebob", "sandy"]))
+    # for user in session.scalars(stmt):
+    #     print(user)
+    #запрос select + join
+    stmt = (
+        select(Address)
+        .join(Address.user)
+        .where(User.name == "sandy")
+        .where(Address.email_address == "sandy@sqlalchemy.org")
+
+    )
     
 Base.metadata.create_all(engine)    
         
